@@ -12,7 +12,7 @@ class StockMoveLine(models.Model):
         for move in self:
             if move.origin:
                 if move.origin[0] == 'S':
-                    move.partner_idP=  move.env['sale.order'].search([('name', '=', move.origin)]).partner_id.name
+                    move.partner_id=  move.env['sale.order'].search([('name', '=', move.origin)]).partner_id.name
                 elif move.origin[0] == 'P':
                     move.partner_id =  move.env['purchase.order'].search([('name', '=', move.origin)]).partner_id.name
                 else:
