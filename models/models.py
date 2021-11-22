@@ -10,15 +10,16 @@ class StockMoveLine(models.Model):
     @api.depends('origin')
     def _Compute_partner_id(self):
         for move in self:
-            if move.origin:
-                if move.origin[0] == 'S':
-                    move.partner_id=  move.env['sale.order'].search([('name', '=', move.origin)]).partner_id.name
-                elif move.origin[0] == 'P':
-                    move.partner_id =  move.env['purchase.order'].search([('name', '=', move.origin)]).partner_id.name
-                else:
-                    move.partner_id=""
-            else: 
-                move.partner_id = ""
+            for line in move:
+                if line.origin:
+                    if line.origin[0] == 'S':
+                        line.partner_id=  line.env['sale.order'].search([('name', '=', line.origin)]).partner_id.name
+                    elif line.origin[0] == 'P':
+                        line.partner_id =  line.env['purchase.order'].search([('name', '=', line.origin)]).partner_id.name
+                    else:
+                        line.partner_id=""
+                else: 
+                    line.partner_id = ""
         
             
     
